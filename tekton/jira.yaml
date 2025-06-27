@@ -16,6 +16,9 @@ spec:
       type: string
       default: ""
       description: "Custom AI API endpoint (overrides provider default)"
+    - name: REPO_URL
+      type: string
+      default: "https://github.com/chmouel/pipelinerun-jira-pullrequest"
     - name: AI_MODEL
       type: string
       default: ""
@@ -48,9 +51,6 @@ spec:
       type: string
       default: "false"
       description: "Set to 'true' to enable creating the ticket in Jira."
-    - name: REPO_URL
-      type: string
-      default: "https://github.com/chmouel/pipelinerun-jira-pullrequest"
     # Secret
     - name: JIRA_TOKEN_SECRET
       type: string
