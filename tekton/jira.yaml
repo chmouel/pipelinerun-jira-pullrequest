@@ -157,9 +157,6 @@ spec:
               echo "$(params.JIRA_TEXT)" | \
                 .venv/bin/pjp \
                   $(params.PR_URL) \
-                  --github-token "${GITHUB_TOKEN}" \
-                  --ai-token "${AI_TOKEN}" \
-                  --jira-token "${JIRA_TOKEN}" \
                   --ai-provider "$(params.AI_PROVIDER)" \
                   --ai-endpoint "$(params.AI_ENDPOINT)" \
                   --ai-model "$(params.AI_MODEL)" \
