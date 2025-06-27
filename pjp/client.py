@@ -344,7 +344,7 @@ def main():
                 generated_content = args.jira_text
         else:
             generated_content = ai_client.generate_jira_ticket(
-                args.user_query, pr_context, args.pr_url
+                args.pr_query, pr_context, args.pr_url
             )
 
         print("\n" + "=" * 50)
