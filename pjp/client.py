@@ -306,7 +306,7 @@ def main():
     )
 
     parser.add_argument(
-        "--user-query",
+        "--pr-query",
         help="Optional user query to guide AI generation. If not provided, will prompt for input.",
     )
 
@@ -314,13 +314,13 @@ def main():
 
     try:
         # --- Step 1: Get User Input and Fetch PR Data ---
-        if not args.user_query:
+        if not args.pr_query:
             print("Enter your query (e.g., 'Create a Jira ticket for this feature.'):")
-            user_query = input().strip()
-            if not user_query:
+            pr_query = input().strip()
+            if not pr_query:
                 print("Error: No query provided.", file=sys.stderr)
                 sys.exit(1)
-            args.user_query = user_query
+            args.pr_query = pr_query
 
         pr_number_str = args.pr_url.rstrip("/").split("/")[-1]
         print(f"Fetching details for pull request #{pr_number_str}...")
