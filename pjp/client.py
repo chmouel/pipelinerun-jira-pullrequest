@@ -426,8 +426,17 @@ def main():
             response = requests.post(
                 comments_url, json=comment_body, headers=headers, timeout=30
             )
+            html_url = None
+            if (
+                response.status_code == 201
+                and "comment" in response.json()
+                and "html_url" in response.json()["comment"]
+            ):
+                html_url = response.json()["comment"]["html_url"]
             if response.ok:
                 print("Posted Jira ticket URL as a comment on the GitHub PR.")
+                if html_url:
+                    print(f"Comment URL: {html_url}")
             else:
                 print(
                     f"Failed to post Jira ticket URL to GitHub PR: {response.text}",
