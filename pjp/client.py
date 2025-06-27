@@ -385,6 +385,7 @@ def main():
                 "Error: Could not parse title and description from AI output.",
                 file=sys.stderr,
             )
+            print(f"Generated content was:\n{generated_content}", file=sys.stderr)
             sys.exit(1)
 
         # Create Jira ticket
