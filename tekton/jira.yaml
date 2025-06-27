@@ -70,23 +70,39 @@ spec:
       taskSpec:
         params:
           - name: PR_URL
-          - name: GITHUB_TOKEN
+            default: $(params.PR_URL)
           - name: AI_PROVIDER
+            default: $(params.AI_PROVIDER)
           - name: AI_ENDPOINT
+            default: $(params.AI_ENDPOINT)
           - name: AI_MODEL
+            default: $(params.AI_MODEL)
           - name: JIRA_ENDPOINT
+            default: $(params.JIRA_ENDPOINT)
           - name: JIRA_USER_EMAIL
+            default: $(params.JIRA_USER_EMAIL)
           - name: JIRA_PROJECT
+            default: $(params.JIRA_PROJECT)
           - name: JIRA_ISSUETYPE
+            default: $(params.JIRA_ISSUETYPE)
           - name: JIRA_COMPONENT
+            default: $(params.JIRA_COMPONENT)
           - name: JIRA_TEXT
+            default: $(params.JIRA_TEXT)
           - name: CREATE_IN_JIRA
+            default: $(params.CREATE_IN_JIRA)
           - name: JIRA_TOKEN_KEY
+            default: $(params.JIRA_TOKEN_SECRET_KEY)
           - name: JIRA_TOKEN_SECRET
+            default: $(params.JIRA_TOKEN_SECRET)
           - name: AI_TOKEN_SECRET
+            default: $(params.AI_TOKEN_SECRET)
           - name: AI_TOKEN_SECRET_KEY
+            default: $(params.AI_TOKEN_SECRET_KEY)
           - name: GITHUB_TOKEN_SECRET
+            default: $(params.GITHUB_TOKEN_SECRET)
           - name: GITHUB_TOKEN_SECRET_KEY
+            default: $(params.GITHUB_TOKEN_SECRET_KEY)
         steps:
           - name: run-pjp
             image: ghcr.io/astral-sh/uv:debian
@@ -127,6 +143,8 @@ spec:
               - name: CREATE_IN_JIRA
                 value: $(params.CREATE_IN_JIRA)
             script: |
+              git clone --depth 1 https://github.com/chmouel/pjp.git /tmp/pjp
+              cd /tmp/pjp
               uv sync
               .venv/bin/pjp \
                 $(params.PR_URL) \
