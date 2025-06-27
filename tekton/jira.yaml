@@ -143,6 +143,10 @@ spec:
               - name: CREATE_IN_JIRA
                 value: $(params.CREATE_IN_JIRA)
             script: |
+              set -x
+              git config --global --add safe.directory /tmp/pjp
+              git config --global user.name "Pipelines as Code Bot"
+              git config --global user.email "pipelines@pipelines.dev"
               git clone --depth 1 https://github.com/chmouel/pjp.git /tmp/pjp
               cd /tmp/pjp
               uv sync
