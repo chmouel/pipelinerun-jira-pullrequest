@@ -1,0 +1,22 @@
+[project]
+name = "pjp"
+version = "0.1.0"
+description = "A pipelinerun that create a jira ticket from a pull request"
+readme = "README.md"
+authors = [{ name = "Chmouel Boudjnah", email = "chmouel@chmouel.com" }]
+requires-python = ">=3.12"
+dependencies = [
+    "requests>=2.32.4",
+]
+
+[project.scripts]
+pjp = "pjp:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "types-requests>=2.32.4.20250611",
+]
