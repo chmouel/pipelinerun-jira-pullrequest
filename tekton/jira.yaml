@@ -154,18 +154,19 @@ spec:
               git clone --depth 1 $(params.REPO_URL) /tmp/pjp
               cd /tmp/pjp
               uv sync
-              .venv/bin/pjp \
-                $(params.PR_URL) \
-                --github-token "${GITHUB_TOKEN}" \
-                --ai-token "${AI_TOKEN}" \
-                --jira-token "${JIRA_TOKEN}" \
-                --ai-provider "$(params.AI_PROVIDER)" \
-                --ai-endpoint "$(params.AI_ENDPOINT)" \
-                --ai-model "$(params.AI_MODEL)" \
-                --jira-endpoint "$(params.JIRA_ENDPOINT)" \
-                --jira-user-email "$(params.JIRA_USER_EMAIL)" \
-                --jira-project "$(params.JIRA_PROJECT)" \
-                --jira-issuetype "$(params.JIRA_ISSUETYPE)" \
-                --jira-component "$(params.JIRA_COMPONENT)" \
-                --jira-text "$(params.JIRA_TEXT)" \
-                $(if [ "$(params.CREATE_IN_JIRA)" = "true" ]; then echo "--create-in-jira"; fi)
+              echo "$(params.JIRA_TEXT)" | \
+                .venv/bin/pjp \
+                  $(params.PR_URL) \
+                  --github-token "${GITHUB_TOKEN}" \
+                  --ai-token "${AI_TOKEN}" \
+                  --jira-token "${JIRA_TOKEN}" \
+                  --ai-provider "$(params.AI_PROVIDER)" \
+                  --ai-endpoint "$(params.AI_ENDPOINT)" \
+                  --ai-model "$(params.AI_MODEL)" \
+                  --jira-endpoint "$(params.JIRA_ENDPOINT)" \
+                  --jira-user-email "$(params.JIRA_USER_EMAIL)" \
+                  --jira-project "$(params.JIRA_PROJECT)" \
+                  --jira-issuetype "$(params.JIRA_ISSUETYPE)" \
+                  --jira-component "$(params.JIRA_COMPONENT)" \
+                  --jira-text "$(params.JIRA_TEXT)" \
+                  $(if [ "$(params.CREATE_IN_JIRA)" = "true" ]; then echo "--create-in-jira"; fi)
