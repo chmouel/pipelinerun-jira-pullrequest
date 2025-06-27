@@ -8,6 +8,9 @@ spec:
     - name: PR_URL
       type: string
       description: "Pull request URL (e.g., https://github.com/owner/repo/pull/123)"
+    - name: PR_QUERY
+      type: string
+      description: "Pull request query to use for AI generation (e.g., 'Generate a Jira ticket from this PR')."
     - name: AI_PROVIDER
       type: string
       default: "gemini"
@@ -89,8 +92,8 @@ spec:
             default: $(params.JIRA_ISSUETYPE)
           - name: JIRA_COMPONENT
             default: $(params.JIRA_COMPONENT)
-          - name: JIRA_TEXT
-            default: $(params.JIRA_TEXT)
+          - name: PR_QUERY
+            default: $(params.PR_QUERY)
           - name: CREATE_IN_JIRA
             default: $(params.CREATE_IN_JIRA)
           - name: JIRA_TOKEN_KEY
@@ -142,8 +145,6 @@ spec:
                 value: $(params.JIRA_ISSUETYPE)
               - name: JIRA_COMPONENT
                 value: $(params.JIRA_COMPONENT)
-              - name: JIRA_TEXT
-                value: $(params.JIRA_TEXT)
               - name: CREATE_IN_JIRA
                 value: $(params.CREATE_IN_JIRA)
             script: |
@@ -154,7 +155,7 @@ spec:
               git clone --depth 1 $(params.REPO_URL) /tmp/pjp
               cd /tmp/pjp
               uv sync
-              echo "$(params.JIRA_TEXT)" | \
+              echo "$(params.PR_QUERY)" | \
                 .venv/bin/pjp \
                   $(params.PR_URL) \
                   --ai-provider "$(params.AI_PROVIDER)" \
@@ -165,5 +166,4 @@ spec:
                   --jira-project "$(params.JIRA_PROJECT)" \
                   --jira-issuetype "$(params.JIRA_ISSUETYPE)" \
                   --jira-component "$(params.JIRA_COMPONENT)" \
-                  --jira-text "$(params.JIRA_TEXT)" \
-                  $(if [ "$(params.CREATE_IN_JIRA)" = "true" ]; then echo "--create-in-jira"; fi)
+                  --create-in-jira
