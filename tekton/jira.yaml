@@ -48,7 +48,9 @@ spec:
       type: string
       default: "false"
       description: "Set to 'true' to enable creating the ticket in Jira."
-
+    - name: REPO_URL
+      type: string
+      value: "https://github.com/chmouel/pipelinerun-jira-pullrequest"
     # Secret
     - name: JIRA_TOKEN_SECRET
       type: string
@@ -103,6 +105,8 @@ spec:
             default: $(params.GITHUB_TOKEN_SECRET)
           - name: GITHUB_TOKEN_SECRET_KEY
             default: $(params.GITHUB_TOKEN_SECRET_KEY)
+          - name: REPO_URL
+            default: $(params.REPO_URL)
         steps:
           - name: run-pjp
             image: ghcr.io/astral-sh/uv:debian
@@ -147,7 +151,7 @@ spec:
               git config --global --add safe.directory /tmp/pjp
               git config --global user.name "Pipelines as Code Bot"
               git config --global user.email "pipelines@pipelines.dev"
-              git clone --depth 1 https://github.com/chmouel/pjp.git /tmp/pjp
+              git clone --depth 1 $(params.REPO_URL) /tmp/pjp
               cd /tmp/pjp
               uv sync
               .venv/bin/pjp \
