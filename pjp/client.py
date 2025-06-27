@@ -305,15 +305,22 @@ def main():
         help="Optional text to use as the Jira ticket content instead of AI-generated content.",
     )
 
+    parser.add_argument(
+        "--user-query",
+        help="Optional user query to guide AI generation. If not provided, will prompt for input.",
+    )
+
     args = parser.parse_args()
 
     try:
         # --- Step 1: Get User Input and Fetch PR Data ---
-        print("Enter your query (e.g., 'Create a Jira ticket for this feature.'):")
-        user_query = input().strip()
-        if not user_query:
-            print("Error: No query provided.", file=sys.stderr)
-            sys.exit(1)
+        if not args.user_query:
+            print("Enter your query (e.g., 'Create a Jira ticket for this feature.'):")
+            user_query = input().strip()
+            if not user_query:
+                print("Error: No query provided.", file=sys.stderr)
+                sys.exit(1)
+            args.user_query = user_query
 
         pr_number_str = args.pr_url.rstrip("/").split("/")[-1]
         print(f"Fetching details for pull request #{pr_number_str}...")
@@ -337,7 +344,7 @@ def main():
                 generated_content = args.jira_text
         else:
             generated_content = ai_client.generate_jira_ticket(
-                user_query, pr_context, args.pr_url
+                args.user_query, pr_context, args.pr_url
             )
 
         print("\n" + "=" * 50)
